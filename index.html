@@ -2,133 +2,115 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Pizza Ordering Form</title>
+    <title>Basic JavaScript Exercises</title>
+
+    <!-- Link to your JavaScript file -->
+    <script src="script.js" defer></script>
 </head>
 
 <body>
-<header>
-    <h1>Pizza Ordering Form</h1>
-</header>
 
-<main>
-<section>
-    <h2>Contact Information</h2>
+    <h1>Basic JavaScript Exercises</h1>
 
-    <form action="#" method="post">
-        <p>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-        </p>
+    <p>Current Counter: <span id="counter">0</span></p>
 
-        <p>
-            <label for="phone">Phone:</label>
-            <input type="tel" id="phone" name="phone" required>
-        </p>
+    <hr>
 
-        <p>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-        </p>
+    <h2>1pt: Simple Functions</h2>
+    <p>
+        When the 'increase' button is clicked, increment the counter above.<br>
+        When the 'decrease' button is clicked, decrement the counter above.
+    </p>
 
-        <h2>Select Pizza Size</h2>
-        <p>
-            <label for="size">Pizza Size:</label>
-            <select id="size" name="size" required>
-                <option value="">--Select Size--</option>
-                <option value="medium">Medium</option>
-                <option value="large">Large</option>
-                <option value="xlarge">XLarge</option>
-            </select>
-        </p>
+    <button onclick="tickUp()">Increase Counter</button>
+    <button onclick="tickDown()">Decrease Counter</button>
 
-        <h2>Select Sauce</h2>
-        <p>
-            <input type="radio" id="marinara" name="sauce" value="marinara" required>
-            <label for="marinara">Marinara</label>
-        </p>
-        <p>
-            <input type="radio" id="ranch" name="sauce" value="ranch">
-            <label for="ranch">Ranch</label>
-        </p>
-        <p>
-            <input type="radio" id="nosauce" name="sauce" value="none">
-            <label for="nosauce">No Sauce</label>
-        </p>
+    <hr>
 
-        <h2>Select Toppings</h2>
-        <p>
-            <input type="checkbox" id="pepperoni" name="toppings" value="pepperoni">
-            <label for="pepperoni">Pepperoni</label>
+    <h2>1pt: Simple For Loop</h2>
+    <p>
+        When this button is clicked, display in the designated area below<br>
+        every number from 0 up to and including the counter above.
+    </p>
 
-            <input type="checkbox" id="sausage" name="toppings" value="sausage">
-            <label for="sausage">Sausage</label>
-        </p>
-        <p>
-            <input type="checkbox" id="mushrooms" name="toppings" value="mushrooms">
-            <label for="mushrooms">Mushrooms</label>
+    <button onclick="runForLoop()">Run For Loop</button>
 
-            <input type="checkbox" id="pineapple" name="toppings" value="pineapple">
-            <label for="pineapple">Pineapple</label>
-        </p>
-        <p>
-            <input type="checkbox" id="peppers" name="toppings" value="peppers">
-            <label for="peppers">Peppers</label>
+    <p>Result: <span id="forLoopResult"></span></p>
 
-            <input type="checkbox" id="onions" name="toppings" value="onions">
-            <label for="onions">Onions</label>
-        </p>
+    <hr>
 
-        <h2>Additional Instructions</h2>
-        <p>
-            <textarea name="instructions" rows="4" cols="30">Add instructions</textarea>
-        </p>
+    <h2>1pt: Repetition with Condition</h2>
+    <p>
+        When this button is clicked, display in the designated area below<br>
+        all odd numbers from 1 to the counter above.
+    </p>
 
-        <p>
-            <button type="submit">Submit</button>
-        </p>
-    </form>
-</section>
+    <button onclick="showOddNumbers()">Show Odd Numbers</button>
 
-<section>
-    <h2>List of My Favorite Games</h2>
+    <p>Result: <span id="oddNumberResult"></span></p>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Developer</th>
-                <th>Title</th>
-                <th>Year</th>
-            </tr>
-        </thead>
+    <hr>
 
-        <tbody>
-            <tr>
-                <td rowspan="3">Bungie</td>
-                <td>Halo 3</td>
-                <td>2007</td>
-            </tr>
-            <tr>
-                <td>Halo Reach</td>
-                <td>2010</td>
-            </tr>
-            <tr>
-                <td>Destiny</td>
-                <td>2014</td>
-            </tr>
-            <tr>
-                <td>Mojang</td>
-                <td>Minecraft</td>
-                <td>2011</td>
-            </tr>
-            <tr>
-                <td colspan="3">Count: 4</td>
-            </tr>
-        </tbody>
-    </table>
-</section>
-</main>
+    <h2>1pt: Arrays</h2>
+    <p>
+        When this button is clicked, add every multiple of 5 up to the counter (above)<br>
+        to an array in reverse order. Then <em>print the array to console</em>.<br>
+        NOTE: print the array itself, not the contents of the array.<br>
+        If the number is &lt; 5, then it should print an empty array.
+    </p>
 
-<footer>
-</footer>
+    <button onclick="addMultiplesToArray()">Array of Reverse Order Multiples of 5</button>
+
+    <hr>
+
+    <h2>2pts: Objects and Form Fields</h2>
+
+    <label for="carType">Car Type</label>
+    <input id="carType" type="text"><br><br>
+
+    <label for="carMPG">Car MPG</label>
+    <input id="carMPG" type="text"><br><br>
+
+    <label for="carColor">Car Color</label>
+    <input id="carColor" type="text"><br><br>
+
+    <button type="button" onclick="printCarObject()">Print Car Object</button>
+
+    <hr>
+
+    <h2>2pts: Objects and Form Fields pt. 2</h2>
+
+    <p>
+        When either of these buttons are clicked,<br>
+        load the data from the car objects found in the footer of this HTML<br>
+        into the form above.
+    </p>
+
+    <button type="button" onclick="loadCar(1)">Load Car 1</button>
+    <button type="button" onclick="loadCar(2)">Load Car 2</button>
+    <button type="button" onclick="loadCar(3)">Load Car 3</button>
+
+    <hr>
+
+    <h2>2pt: Changing Styles</h2>
+
+    <p id="styleParagraph">
+        When either of these buttons are clicked,<br>
+        the text color of this paragraph (and only this paragraph) should change<br>
+        to the color described by the button text.
+    </p>
+
+    <button type="button" onclick="changeColor(1)">Red</button>
+    <button type="button" onclick="changeColor(2)">Green</button>
+    <button type="button" onclick="changeColor(3)">Blue</button>
+
+    <footer>
+        <script>
+            let carObject1 = {cType: "sedan", cMPG: "32", cColor: "blue"};
+            let carObject2 = {cType: "truck", cMPG: "28", cColor: "red"};
+            let carObject3 = {cType: "van", cMPG: "30", cColor: "green"};
+        </script>
+    </footer>
+
 </body>
 </html>
