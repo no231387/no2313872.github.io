@@ -1,116 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Basic JavaScript Exercises</title>
+<meta charset="UTF-8">
+<title>Pokemon Team Builder</title>
 
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #9fc3cf;
+    text-align: center;
+}
 
-    <script src="script.js" defer></script>
+.container {
+    background: white;
+    width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 25px;
+    border: 6px solid goldenrod;
+}
+
+img {
+    width: 200px;
+    height: 200px;
+}
+
+select {
+    width: 200px;
+    margin: 5px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 6px 12px;
+}
+
+.team {
+    margin-top: 20px;
+    border-top: 2px solid black;
+    padding-top: 10px;
+    text-align: left;
+}
+</style>
 </head>
 
 <body>
 
-    <h1>Basic JavaScript Exercises</h1>
+<div class="container">
+    <h2>Name or ID</h2>
+    <input type="text" id="pokemonInput">
+    <button onclick="findPokemon()">Find</button>
 
-    <p>Current Counter: <span id="counter">0</span></p>
+    <div id="pokemonDisplay">
+        <img id="pokemonImage" src="" alt="">
+        <br><br>
+        <audio id="pokemonCry" controls></audio>
+        <br><br>
 
-    <hr>
+        <div>
+            <select id="move1"></select>
+            <select id="move2"></select><br>
+            <select id="move3"></select>
+            <select id="move4"></select>
+        </div>
 
-    <h2>1pt: Simple Functions</h2>
-    <p>
-        When the 'increase' button is clicked, increment the counter above.<br>
-        When the 'decrease' button is clicked, decrement the counter above.
-    </p>
+        <button onclick="addToTeam()">Add to Team</button>
+    </div>
 
-    <button onclick="tickUp()">Increase Counter</button>
-    <button onclick="tickDown()">Decrease Counter</button>
+    <div class="team" id="teamSection">
+        <h3>Team</h3>
+    </div>
+</div>
 
-    <hr>
+<script>
+const cache = {}; // local cache object
+let currentPokemon = null;
 
-    <h2>1pt: Simple For Loop</h2>
-    <p>
-        When this button is clicked, display in the designated area below<br>
-        every number from 0 up to and including the counter above.
-    </p>
+async function findPokemon() {
+    const input = document.getElementById("pokemonInput").value.toLowerCase().trim();
+    if (!input) return;
 
-    <button onclick="runForLoop()">Run For Loop</button>
+    if (cache[input]) {
+        loadPokemon(cache[input]);
+        return;
+    }
 
-    <p>Result: <span id="forLoopResult"></span></p>
+    try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${input}`);
+        if (!response.ok) throw new Error("Pokemon not found");
 
-    <hr>
+        const data = await response.json();
+        cache[input] = data; // cache response
+        loadPokemon(data);
 
-    <h2>1pt: Repetition with Condition</h2>
-    <p>
-        When this button is clicked, display in the designated area below<br>
-        all odd numbers from 1 to the counter above.
-    </p>
+    } catch (error) {
+        alert("Pokemon not found.");
+    }
+}
 
-    <button onclick="showOddNumbers()">Show Odd Numbers</button>
+function loadPokemon(data) {
+    currentPokemon = data;
 
-    <p>Result: <span id="oddNumberResult"></span></p>
+    document.getElementById("pokemonImage").src =
+        data.sprites.front_default;
 
-    <hr>
+    document.getElementById("pokemonCry").src =
+        data.cries?.latest || "";
 
-    <h2>1pt: Arrays</h2>
-    <p>
-        When this button is clicked, add every multiple of 5 up to the counter (above)<br>
-        to an array in reverse order. Then <em>print the array to console</em>.<br>
-        NOTE: print the array itself, not the contents of the array.<br>
-        If the number is &lt; 5, then it should print an empty array.
-    </p>
+    const selects = ["move1", "move2", "move3", "move4"];
+    const moves = data.moves.map(m => m.move.name);
 
-    <button onclick="addMultiplesToArray()">Array of Reverse Order Multiples of 5</button>
+    selects.forEach(id => {
+        const dropdown = document.getElementById(id);
+        dropdown.innerHTML = "";
 
-    <hr>
+        moves.slice(0, 50).forEach(move => {
+            const option = document.createElement("option");
+            option.value = move;
+            option.textContent = move;
+            dropdown.appendChild(option);
+        });
+    });
+}
 
-    <h2>2pts: Objects and Form Fields</h2>
+function addToTeam() {
+    if (!currentPokemon) return;
 
-    <label for="carType">Car Type</label>
-    <input id="carType" type="text"><br><br>
+    const teamSection = document.getElementById("teamSection");
 
-    <label for="carMPG">Car MPG</label>
-    <input id="carMPG" type="text"><br><br>
+    const container = document.createElement("div");
+    container.style.display = "flex";
+    container.style.alignItems = "center";
+    container.style.borderTop = "1px solid black";
+    container.style.padding = "10px 0";
 
-    <label for="carColor">Car Color</label>
-    <input id="carColor" type="text"><br><br>
+    const img = document.createElement("img");
+    img.src = currentPokemon.sprites.front_default;
+    img.style.width = "80px";
+    img.style.height = "80px";
 
-    <button type="button" onclick="printCarObject()">Print Car Object</button>
+    const moveList = document.createElement("ul");
 
-    <hr>
+    ["move1", "move2", "move3", "move4"].forEach(id => {
+        const li = document.createElement("li");
+        li.textContent = document.getElementById(id).value;
+        moveList.appendChild(li);
+    });
 
-    <h2>2pts: Objects and Form Fields pt. 2</h2>
-
-    <p>
-        When either of these buttons are clicked,<br>
-        load the data from the car objects found in the footer of this HTML<br>
-        into the form above.
-    </p>
-
-    <button type="button" onclick="loadCar(1)">Load Car 1</button>
-    <button type="button" onclick="loadCar(2)">Load Car 2</button>
-    <button type="button" onclick="loadCar(3)">Load Car 3</button>
-
-    <hr>
-
-    <h2>2pt: Changing Styles</h2>
-
-    <p id="styleParagraph">
-        When either of these buttons are clicked,<br>
-        the text color of this paragraph (and only this paragraph) should change<br>
-        to the color described by the button text.
-    </p>
-
-    <button type="button" onclick="changeColor(1)">Red</button>
-    <button type="button" onclick="changeColor(2)">Green</button>
-    <button type="button" onclick="changeColor(3)">Blue</button>
-
-    <footer>
-        <script>
-            let carObject1 = {cType: "sedan", cMPG: "32", cColor: "blue"};
-            let carObject2 = {cType: "truck", cMPG: "28", cColor: "red"};
-            let carObject3 = {cType: "van", cMPG: "30", cColor: "green"};
-        </script>
-    </footer>
+    container.appendChild(img);
+    container.appendChild(moveList);
+    teamSection.appendChild(container);
+}
+</script>
 
 </body>
 </html>
